@@ -13,6 +13,7 @@ namespace Terkoiz.Skipper
     public class QuestObjectiveViewPatch : ModulePatch
     {
         private static string UnderlyingQuestControllerClassName;
+        internal static GameObject LastSeenObjectivesBlock;
         
         protected override MethodBase GetTargetMethod()
         {
@@ -20,7 +21,7 @@ namespace Terkoiz.Skipper
         }
 
         [PatchPostfix]
-        private static void PatchPostfix([CanBeNull]DefaultUIButton ____handoverButton, AbstractQuestControllerClass questController, Condition condition, IConditionCounter quest)
+        private static void PatchPostfix([CanBeNull]DefaultUIButton ____handoverButton, AbstractQuestControllerClass questController, Condition condition, IConditionCounter quest, QuestObjectiveView __instance)
         {
             if (!SkipperPlugin.ModEnabled.Value)
             {
@@ -47,13 +48,15 @@ namespace Terkoiz.Skipper
                 UnderlyingQuestControllerClassName = type.Name.Split('`')[0];
                 SkipperPlugin.Logger.LogDebug($"Resolved {nameof(UnderlyingQuestControllerClassName)} to be {UnderlyingQuestControllerClassName}");
             }
-            
+
+            LastSeenObjectivesBlock = __instance.transform.parent.gameObject;
+
             var skipButton = Object.Instantiate(____handoverButton, ____handoverButton.transform.parent.transform);
 
             skipButton.SetRawText("SKIP", 22);
-            skipButton.gameObject.name = "SkipButton";
+            skipButton.gameObject.name = SkipperPlugin.SkipButtonName;
             skipButton.gameObject.GetComponent<UnityEngine.UI.LayoutElement>().minWidth = 100f;
-            skipButton.gameObject.SetActive(!quest.IsConditionDone(condition));
+            skipButton.gameObject.SetActive(SkipperPlugin.AlwaysDisplay.Value && !quest.IsConditionDone(condition));
             
             skipButton.OnClick.RemoveAllListeners();
             skipButton.OnClick.AddListener(() => ItemUiContext.Instance.ShowMessageWindow(
