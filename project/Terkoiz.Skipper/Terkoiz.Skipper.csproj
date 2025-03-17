@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net471</TargetFramework>
-    <Version>1.1.0</Version>
+    <Version>1.1.3</Version>
     <Authors>Terkoiz</Authors>
   </PropertyGroup>
 
@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Aki.Reflection">
-      <HintPath>..\References\EFT_Managed\Aki.Reflection.dll</HintPath>
+    <Reference Include="SPT.Reflection">
+      <HintPath>..\References\EFT_Managed\spt-reflection.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Assembly-CSharp">

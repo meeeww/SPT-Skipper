@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Reflection;
-using Aki.Reflection.Patching;
+using SPT.Reflection.Patching;
 using EFT;
 using EFT.Quests;
 using EFT.UI;
@@ -21,7 +21,7 @@ namespace Terkoiz.Skipper
         }
 
         [PatchPostfix]
-        private static void PatchPostfix([CanBeNull]DefaultUIButton ____handoverButton, AbstractQuestControllerClass questController, Condition condition, IConditionCounter quest, QuestObjectiveView __instance)
+        private static void PatchPostfix([CanBeNull]DefaultUIButton ____handoverButton, AbstractQuestControllerClass questController, Condition condition, QuestClass quest, QuestObjectiveView __instance)
         {
             if (!SkipperPlugin.ModEnabled.Value)
             {
