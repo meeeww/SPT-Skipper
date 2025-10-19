@@ -5,10 +5,10 @@ using EFT.UI;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace Terkoiz.Skipper
+namespace SkipQuest
 {
-    [BepInPlugin("com.terkoiz.skipper", "Terkoiz.Skipper", "1.1.3")]
-    public class SkipperPlugin : BaseUnityPlugin
+    [BepInPlugin("com.zas.questskipper", "QuestSkipper", "1.0.0")]
+    public class Plugin : BaseUnityPlugin
     {
         internal const string SkipButtonName = "SkipButton";
 
@@ -18,6 +18,7 @@ namespace Terkoiz.Skipper
         internal static ConfigEntry<bool> ModEnabled;
         internal static ConfigEntry<bool> AlwaysDisplay;
         internal static ConfigEntry<KeyboardShortcut> DisplayHotkey;
+        internal static ConfigEntry<bool> ShowConfirmation;
 
         [UsedImplicitly]
         internal void Start()
@@ -47,6 +48,12 @@ namespace Terkoiz.Skipper
                 "3. Display hotkey",
                 new KeyboardShortcut(KeyCode.LeftControl),
                 "Holding down this key will make the Skip buttons appear.");
+
+            ShowConfirmation = Config.Bind(
+                MainSectionName,
+                "4. Show confirmation button",
+                true,
+                "If enabled, the box of confirmation will pop up in each skip.");
         }
 
         [UsedImplicitly]
